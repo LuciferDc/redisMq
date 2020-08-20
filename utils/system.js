@@ -1,7 +1,7 @@
 import fs from 'fs'
 import structList from '../config/structList'
 class System {
-  static getObject(oPath) {
+  static getObject (oPath) {
     let arr = oPath.split('.')
     let structName = arr[0]
     let packageName = arr[1]
@@ -17,8 +17,19 @@ class System {
       } catch (err) {
         console.log('wrong package:', oPath, 'path:', classPath)
       }
-      
+      return System.register(classPath, classObject, packageName, className)
     }
+  }
+
+  static register (classPath, classObject, packageName, className) {
+    if (System.objectList[classPath]) {
+      throw new Error('重名文件')
+    } else {
+      let obj = null
+      obj = new classObject(packageName, className)
+      System.objectList[classPath] = obj
+    }
+    return System.objectList[classPath]
   }
 }
 
