@@ -1,15 +1,12 @@
-import Koa from 'koa'
+const Koa = require('koa')
 const app = new Koa()
-import views from 'koa-views'
-import json from 'koa-json'
-import onerror from 'koa-onerror'
-import bodyparser from 'koa-bodyparser'
-import Klogger from 'koa-logger'
+const views = require('koa-views')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const Klogger = require('koa-logger')
 
-// import index from './routes/index'
-// import users from './routes/users'
-// console.log(index.routes())
-import composeRouter from './routes/composeRouter'
+const composeRouter = require('./routes/composeRouter')
 const composeR = new composeRouter(`${__dirname}/routes`)
 
 
@@ -64,4 +61,4 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-export default app
+module.exports = app

@@ -1,4 +1,4 @@
-import path from 'path'
+const path = require('path')
 const basePath = path.normalize(path.join(__dirname, '..'))
 const structList = {
   controller:path.join(basePath, 'controller/impl'),

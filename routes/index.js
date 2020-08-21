@@ -1,5 +1,5 @@
-import System from '../utils/system'
-const db = System.getObject('db.connect').getCon()
+const System = require('../utils/system')
+const dao = System.getObject('dao.testdao.testArrDao')
 const router = require('koa-router')()
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {

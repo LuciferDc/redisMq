@@ -1,5 +1,4 @@
-import fs from 'fs'
-import structList from '../config/structList'
+const structList = require('../config/structList')
 class System {
   static getObject (oPath) {
     console.log(oPath)

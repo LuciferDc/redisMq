@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import config from '../config/dufault'
-import glob from 'glob'
-import path from 'path'
+const Sequelize = require('sequelize')
+const config = require('../config/dufault')
+const glob = require('glob')
+const path = require('path')
 class DbFactory {
   constructor() {
     console.log('======= seq init =======')

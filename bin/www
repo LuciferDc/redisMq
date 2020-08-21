@@ -3,14 +3,13 @@
 /**
  * Module dependencies.
  */
-
-import app from '../app';
+const app = require('../app')
 var debug = require('debug')('demo:server');
-import { createServer } from 'http';
-import config from '../config/dufault'
+const { createServer } = require('http')
+const config = require('../config/dufault')
 
 /**
- * Get port from environment and store in Express.
+ * Get port = require(environment and store in Express.
  */
 
 var port = normalizePort(config.port || '3000');
