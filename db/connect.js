@@ -22,11 +22,11 @@ class DbFactory {
   async initModels () {
     const modelpath = path.normalize(`${__dirname}/models/`)
     const models = glob.sync(`${modelpath}/**/*.js`)
+    console.log('======= init models =======')
     models.forEach(m => {
       const modelTmp = require(m)
       modelTmp(this.db, Sequelize.DataTypes)
     })
-    console.log('======= init models =======')
   }
 
   async initRelations() {

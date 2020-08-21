@@ -1,5 +1,5 @@
 const System = require('../utils/system')
-const dao = System.getObject('dao.testdao.testArrDao')
+const dao = System.getObject('service.testpackage.testArrService')
 const router = require('koa-router')()
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
