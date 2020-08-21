@@ -5,10 +5,11 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const Klogger = require('koa-logger')
+const koaJwt = require('koa-jwt')
 
 const composeRouter = require('./routes/composeRouter')
 const composeR = new composeRouter(`${__dirname}/routes`)
-
+require('dotenv').config({path:`${__dirname}/env/.env`})
 
 const logger = Klogger((str) => {                // 使用日志中间件
   console.log(`[Router-${new Date}] ${str}`)
