@@ -1,12 +1,9 @@
-import { DataTypes } from 'sequelize'
-import db from '../db/connect'
-import arr from '../db/testarr'
+import System from '../utils/system'
+const db = System.getObject('db.connect').getCon()
 const router = require('koa-router')()
-const arrModel = arr(db, DataTypes)
 router.get('/', async (ctx, next) => {
-  let res = await db.models.ts.findAll()
   await ctx.render('index', {
-    title: JSON.stringify(res[0].dataValues)
+    title: 'test'
   })
 })
 

@@ -16,7 +16,7 @@ class composeRouter {
 
   requireRouters (filePath) {
     let files = fs.readdirSync(`${this.basePath}${filePath}`)
-    console.log('init routes')
+    console.log('======= init routes =======')
     files.forEach(file => {
       let fileName = `${this.basePath}${filePath}${file}`
       if (fs.statSync(fileName).isFile() && path.extname(fileName) === '.js') {

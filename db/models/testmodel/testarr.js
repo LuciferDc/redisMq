@@ -1,8 +1,8 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  console.log('init model')
-  return sequelize.define('ts', {
+  console.log('model testarr ---')
+  return sequelize.define('testarr', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
