@@ -9,7 +9,7 @@ class Dao {
 
   static getModelName(classObj) {
     let modelName = classObj["name"].substring(0, classObj["name"].lastIndexOf("Dao"))
-    modelName = modelName.replace(/[A-Z]/, str => {
+    modelName = modelName.replace(/^[A-Z]/, str => {
       return str.toLowerCase()
     })
     return modelName

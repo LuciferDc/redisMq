@@ -8,11 +8,11 @@ class ServiceBase {
   }
 
   static getDaoName(classObj) {
-    let modelName = `${classObj["name"].substring(0, classObj["name"].lastIndexOf("Service"))}Dao`
-    modelName = modelName.replace(/[A-Z]/, str => {
+    let daoName = `${classObj["name"].substring(0, classObj["name"].lastIndexOf("Service"))}Dao`
+    daoName = daoName.replace(/^[A-Z]/, str => {
       return str.toLowerCase()
     })
-    return modelName
+    return daoName
   }
 }
 module.exports = ServiceBase

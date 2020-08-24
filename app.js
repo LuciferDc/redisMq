@@ -6,10 +6,11 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const Klogger = require('koa-logger')
 const koaJwt = require('koa-jwt')
+const authGuard = require('./middleware/authGuard')
 
 const composeRouter = require('./routes/composeRouter')
 const composeR = new composeRouter(`${__dirname}/routes`)
-require('dotenv').config({path:`${__dirname}/env/.env`})
+require('dotenv').config({ path: `${__dirname}/env/.env` })
 
 const logger = Klogger((str) => {                // 使用日志中间件
   console.log(`[Router-${new Date}] ${str}`)
@@ -30,6 +31,10 @@ app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
 
+// vetrify
+app.use(koaJwt({ passthrough: true }).unless({ path: [/^\/user\/login/] }))
+app.use(authGuard)
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -39,13 +44,12 @@ app.use(async (ctx, next) => {
 })
 
 // origin
-// app.use(cors())
-app.use(async (ctx, next)=> {
+app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*');
   ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   if (ctx.method == 'OPTIONS') {
-    ctx.body = 200; 
+    ctx.body = 200;
   } else {
     await next();
   }

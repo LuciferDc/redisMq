@@ -1,4 +1,4 @@
-const ServiceBase = require('../../service.base')
+const ServiceBase = require('../service.base')
 
 class TestArrService extends ServiceBase {
   constructor() {

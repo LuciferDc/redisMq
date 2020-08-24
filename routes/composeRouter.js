@@ -32,7 +32,7 @@ class composeRouter {
           }
         }
       } else {
-        this.requireRouters(this.basePath, `${filePath}${file}/`)
+        this.requireRouters(`${filePath}${file}/`)
       }
     })
   }
