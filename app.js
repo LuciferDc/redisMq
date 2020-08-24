@@ -5,7 +5,6 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const Klogger = require('koa-logger')
-const koaJwt = require('koa-jwt')
 const authGuard = require('./middleware/authGuard')
 
 const composeRouter = require('./routes/composeRouter')
@@ -32,7 +31,6 @@ app.use(views(__dirname + '/views', {
 }))
 
 // vetrify
-app.use(koaJwt({ passthrough: true }).unless({ path: [/^\/user\/login/] }))
 app.use(authGuard)
 
 // logger
