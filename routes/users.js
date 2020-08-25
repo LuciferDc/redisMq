@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 
-router.get('/', function (ctx, next) {
+router.get('/:id', function (ctx, next) {
   ctx.body = 'this is a users response!'
 })
 

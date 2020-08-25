@@ -9,7 +9,7 @@ const authGuard = require('./middleware/authGuard')
 
 const composeRouter = require('./routes/composeRouter')
 const composeR = new composeRouter(`${__dirname}/routes`)
-require('dotenv').config({ path: `${__dirname}/env/.env` })
+let res = require('dotenv').config({ path: `${__dirname}/env/.env` })
 
 const logger = Klogger((str) => {                // 使用日志中间件
   console.log(`[Router-${new Date}] ${str}`)
@@ -30,8 +30,6 @@ app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
 
-// vetrify
-app.use(authGuard)
 
 // logger
 app.use(async (ctx, next) => {
@@ -40,6 +38,9 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+// vetrify
+app.use(authGuard)
 
 // origin
 app.use(async (ctx, next) => {

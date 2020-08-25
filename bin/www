@@ -6,7 +6,8 @@
 const app = require('../app')
 var debug = require('debug')('demo:server');
 const { createServer } = require('http')
-const config = require('../config/dufault')
+const System = require('../utils/system')
+const config = System.getObject('config.default').baseConfig()
 
 /**
  * Get port = require(environment and store in Express.

@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize')
-const config = require('../config/dufault')
+const System = require('../utils/system')
 const glob = require('glob')
 const path = require('path')
 class DbFactory {
   constructor() {
     console.log('======= seq init =======')
-    const mysqlConfig = config.mysqlConfig()
+    const mysqlConfig = System.getObject('config.default').mysqlConfig()
     console.log(mysqlConfig)
     this.db = new Sequelize(
       mysqlConfig.dbname,
