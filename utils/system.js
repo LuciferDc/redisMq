@@ -33,6 +33,14 @@ class System {
     }
     return System.objectList[classPath]
   }
+
+  static orgResult(data = {}, code = 0, msg = 'success') {
+    return {
+      data,
+      code,
+      msg
+    }
+  }
 }
 
 System.objectList = {}

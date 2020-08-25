@@ -49,7 +49,7 @@ class Config {
   }
   jwtConfig () {
     return {
-      primaryKey: fs.readFileSync(`${__dirname}/../env/private.pem`).toString(),
+      privateKey: fs.readFileSync(`${__dirname}/../env/private.pem`).toString(),
       publicKey: fs.readFileSync(`${__dirname}/../env/public.pem`).toString(),
       accessTokenExp: this.ENVI.ACCESS_TOKEN_EXP,
       refreshTokenExp: this.ENVI.REFRESH_TOKEN_EXP

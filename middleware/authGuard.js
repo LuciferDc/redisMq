@@ -13,7 +13,7 @@ module.exports = async (ctx, next) => {
       ctx.state.user = payload
       await next()
     } catch (err) {
-      // TODO: refreshtoken 无响应刷新 暂时不做
+      // TODO: refreshtoken 无感应刷新 暂时不做
       if (err.message === 'jwt expired') {
         let payload = jwt.decode(token, config.publicKey)
         console.log('refreshtoken todo ---')

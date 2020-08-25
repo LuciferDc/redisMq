@@ -1,7 +1,7 @@
-const controllerBase = require('../controller.base')
-class TestArrController extends controllerBase {
+const ControllerBase = require('../controller.base')
+class TestArrController extends ControllerBase {
   constructor() {
-    super('testpackage', controllerBase.getServiceName(TestArrController))
+    super('testpackage', ControllerBase.getServiceName(TestArrController))
   }
   async test (ctx, next) {
     ctx.body = 'test ctl'
