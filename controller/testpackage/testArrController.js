@@ -4,7 +4,7 @@ class TestArrController extends ControllerBase {
     super('testpackage', ControllerBase.getServiceName(TestArrController))
   }
   async test (ctx, next) {
-    ctx.body = 'test ctl'
+    ctx.body = await this.service.test(ctx)
   }
 }
 module.exports = TestArrController

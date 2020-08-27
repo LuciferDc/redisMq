@@ -19,6 +19,7 @@ class System {
         return System.register(classPath, classObject, packageName, className)
       } catch (err) {
         console.log('wrong package:', oPath, 'path:', classPath)
+        console.log("getObj err msg", err)
       }
     }
   }

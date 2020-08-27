@@ -47,12 +47,22 @@ class Config {
       },
     };
   }
+
   jwtConfig () {
     return {
       privateKey: fs.readFileSync(`${__dirname}/../env/private.pem`).toString(),
       publicKey: fs.readFileSync(`${__dirname}/../env/public.pem`).toString(),
       accessTokenExp: this.ENVI.ACCESS_TOKEN_EXP,
       refreshTokenExp: this.ENVI.REFRESH_TOKEN_EXP
+    }
+  }
+
+  redisConfig () {
+    return {
+      host: this.ENVI.REDIS_HOST,
+      port: this.ENVI.REDIS_PORT,
+      password: this.ENVI.REDIS_PWD,
+      db: this.ENVI.REDIS_DB
     }
   }
 }
