@@ -11,7 +11,7 @@ class RedisClient {
       host: this.config.host,
       port: this.config.port,
       password: this.config.password,
-      db: 1
+      db: this.config.db
     })
 
     this.client.on("error", function (err) {
