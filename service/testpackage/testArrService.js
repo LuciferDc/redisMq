@@ -6,8 +6,9 @@ class TestArrService extends ServiceBase {
     this.redisClient = System.getObject('util.clients.redisClient')
   }
   async test (ctx) {
-  return await this.redisClient.xadd('testf', '*', { a: 'b' })
-    // return await this.redisClient.xgrouptest()
+  // await this.redisClient.xadd('testx', '*', { a: 'b' })
+  return await this.redisClient.xtrim('testf', 5)
+  // return await this.redisClient.xgrouptest()
   }
 }
 module.exports = TestArrService
