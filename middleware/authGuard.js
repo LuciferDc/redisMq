@@ -7,7 +7,7 @@ module.exports = async (ctx, next) => {
   if (whiteList.indexOf(url) !== -1) {
     await next()
   } else {
-    const token = (ctx.headers.authorization.replace('Bearer ', '')) || ctx.headers.token
+    const token = ctx.headers.authorization ? (ctx.headers.authorization.replace('Bearer ', '')) : ctx.headers.token
     try {
       const payload = jwt.verify(token, config.publicKey);
       ctx.state.user = payload

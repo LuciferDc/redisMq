@@ -39,9 +39,6 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-// vetrify
-app.use(authGuard)
-
 // origin
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*');
@@ -53,6 +50,9 @@ app.use(async (ctx, next) => {
     await next();
   }
 })
+
+// vetrify
+app.use(authGuard)
 
 // routes
 app.use(composeR.initRouters().routes())
