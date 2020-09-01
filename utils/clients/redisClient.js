@@ -1,7 +1,6 @@
 const System = require('../system')
 const redis = require('redis')
 const bluebird = require('bluebird')
-const { relativeTimeRounding } = require('moment')
 bluebird.promisifyAll(redis)
 class RedisClient {
   constructor() {
