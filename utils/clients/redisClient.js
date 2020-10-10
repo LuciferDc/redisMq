@@ -19,19 +19,27 @@ class RedisClient {
     })
   }
 
+
+  /**
+   * @description get keys list by reg
+   * @author liangwk
+   * @param {string} reg eg: *xx*
+   * @returns 
+   * @memberof RedisClient
+   */
   async keys (reg) {
     return this.client.keysAsync(reg)
   }
 
 
   /**
-   * @description
+   * @description add data to a stream
    * @author liangwk
-   * @param {*} key
-   * @param {*} id
-   * @param {*} data
-   * @param {*} max
-   * @param {boolean} dim
+   * @param {string} key eg: aaa
+   * @param {string} id eg: * / 0-1
+   * @param {object} data eg: {a: b}
+   * @param {number} max
+   * @param {boolean} dim similar
    * @returns 
    * @memberof RedisClient
    */
@@ -53,48 +61,127 @@ class RedisClient {
     return res
   }
 
+
+  /**
+   * @description ack
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group of stream
+   * @param {string} id eg: 0-1
+   * @returns 
+   * @memberof RedisClient
+   */
   async xack (key, group, id) {
     let func = `this.client.xackAsync('${key}', '${group}', '${id}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description change consumer of data which id
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group of stream
+   * @param {string} consumer the consumer of group
+   * @param {number} exprie ms
+   * @param {string} id eg: 0-1
+   * @returns 
+   * @memberof RedisClient
+   */
   async xclaim (key, group, consumer, exprie, id) {
     let func = `this.client.xclaimAsync('${key}', '${group}', '${consumer}', '${exprie}', '${id}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description del
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} id eg: 0-1
+   * @returns 
+   * @memberof RedisClient
+   */
   async xdel (key, id) {
     let func = `this.client.xdelAsync('${key}', '${id}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description createGroup
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group name
+   * @param {string} id the first id in this group, eg: 0(first) / $(last) / 0-1
+   * @returns 
+   * @memberof RedisClient
+   */
   async xgroupCreate (key, group, id) {
     let func = `this.client.xgroupAsync('create', '${key}', '${group}', '${id}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description deleteGroup
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group name
+   * @returns 
+   * @memberof RedisClient
+   */
   async xgroupDel (key, group) {
     let func = `this.client.xgroupAsync('destroy', '${key}', '${group}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description deleteConsumer
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group of stream
+   * @param {string} consumer the consumer of group
+   * @returns 
+   * @memberof RedisClient
+   */
   async xgroupDelConsumer (key, group, consumer) {
     let func = `this.client.xgroupAsync('delconsumer', '${key}', '${group}', '${consumer}')`
     let res = this.evalf(func)
     return res
   }
 
+
+
+  /**
+   * @description set start id for group
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @param {string} group the group name
+   * @param {string} id the first id in this group, eg: 0(first) / $(last) / 0-1
+   * @returns 
+   * @memberof RedisClient
+   */
   async xgroupSetId (key, group, id) {
     let func = `this.client.xgroupAsync('setid', '${key}', '${group}', '${id}')`
     let res = this.evalf(func)
     return res
   }
 
+
+  /**
+   * @description get stream info
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @returns 
+   * @memberof RedisClient
+   */
   async xinfoStream (key) {
     let func = `this.client.xinfoAsync('stream', '${key}')`
     let res = await this.doSync(func)
@@ -102,6 +189,14 @@ class RedisClient {
     return res
   }
 
+
+  /**
+   * @description get groupInfo
+   * @author liangwk
+   * @param {string} key group name
+   * @returns 
+   * @memberof RedisClient
+   */
   async xinfoGroup (key) {
     let func = `this.client.xinfoAsync('groups', '${key}')`
     let res = await this.doSync(func)
@@ -111,6 +206,15 @@ class RedisClient {
     return res
   }
 
+
+  /**
+   * @description get consumer info
+   * @author liangwk
+   * @param {string} key consumer name
+   * @param {string} group group name
+   * @returns 
+   * @memberof RedisClient
+   */
   async xinfoConsumer (key, group) {
     let func = `this.client.xinfoAsync('consumers', '${key}', '${group}')`
     let res = await this.doSync(func)
@@ -120,6 +224,14 @@ class RedisClient {
     return res
   }
 
+
+  /**
+   * @description get stream length
+   * @author liangwk
+   * @param {string} key the key of stream
+   * @returns 
+   * @memberof RedisClient
+   */
   async xlen (key) {
     let func = `this.client.xlenAsync('${key}')`
     let res = this.evalf(func)
@@ -127,12 +239,12 @@ class RedisClient {
   }
 
   /**
-   * @description
+   * @description get data list which not ack
    * @author liangwk
-   * @param {*} key
-   * @param {*} group
-   * @param {array} range [start, end, count]
-   * @param {*} consumer
+   * @param {string} key the key of stream
+   * @param {string} group group name
+   * @param {array} range [start, end, count] 特殊ID：- 和 + 分别表示流中可能的最小ID和最大ID
+   * @param {string} consumer consumer name
    * @returns 
    * @memberof RedisClient
    */
@@ -158,11 +270,11 @@ class RedisClient {
   }
 
   /**
-   * @description
+   * @description get data list
    * @author liangwk
-   * @param {*} key
-   * @param {array} range [start, end]
-   * @param {*} count
+   * @param {string} key the key of stream
+   * @param {array} range [start, end]  特殊ID：- 和 + 分别表示流中可能的最小ID和最大ID
+   * @param {number} count
    * @memberof RedisClient
    */
   async xrange (key, range, count) {
@@ -186,8 +298,8 @@ class RedisClient {
    * @author liangwk
    * @param {array} keys
    * @param {array} ids
-   * @param {*} count
-   * @param {*} block
+   * @param {number} count
+   * @param {number} block ms
    * @returns 
    * @memberof RedisClient
    */
@@ -218,14 +330,14 @@ class RedisClient {
 
 
   /**
-   * @description
+   * @description group read
    * @author liangwk
-   * @param {*} group
-   * @param {*} consumer
+   * @param {string} group group name
+   * @param {string} consumer consumer name
    * @param {array} keys
    * @param {array} ids
-   * @param {*} count
-   * @param {*} block
+   * @param {number} count 
+   * @param {number} block ms
    * @returns 
    * @memberof RedisClient
    */
@@ -252,11 +364,11 @@ class RedisClient {
 
 
   /**
-   * @description
+   * @description get data list order by id desc
    * @author liangwk
-   * @param {*} key
-   * @param {array} range [end, start]
-   * @param {*} count
+   * @param {string} key the key of strean
+   * @param {array} range [end, start] 特殊ID：- 和 + 分别表示流中可能的最小ID和最大ID
+   * @param {number} count
    * @memberof RedisClient
    */
   async xrevrange (key, range, count) {
@@ -277,11 +389,11 @@ class RedisClient {
 
 
   /**
-   * @description
+   * @description trim data
    * @author liangwk
-   * @param {*} key
-   * @param {*} max
-   * @param {boolean} dim
+   * @param {string} key
+   * @param {number} max
+   * @param {boolean} dim similer
    * @returns 
    * @memberof RedisClient
    */
@@ -295,16 +407,7 @@ class RedisClient {
     return res
   }
 
-  async xgrouptest () {
-    // let res = await this.client.xgroupAsync('create', 'testf', 'g1', 0)
-    // console.log('g', res)
-    let res = await this.client.xreadgroupAsync('group', 'g1', 'c1', 'streams', 'testf', '>')
-    res = this.orgStreamData(res)
-    console.log('s', res)
-  }
-
   evalf (fn) {
-    console.log(fn)
     return new Function(`return ${fn}`).apply(this)
   }
 

@@ -3,12 +3,11 @@ const System = require('../../utils/system')
 class TestArrService extends ServiceBase {
   constructor() {
     super('testpackage', ServiceBase.getDaoName(TestArrService))
-    this.redisClient = System.getObject('util.clients.redisClient')
+    this.queueService = System.getObject('service.queue.queueService');
   }
   async test (ctx) {
-  // await this.redisClient.xadd('testx', '*', { a: 'b' })
-  return await this.redisClient.xtrim('testf', 5)
-  // return await this.redisClient.xgrouptest()
+    
+    // await this.redisClient.xadd('testx', '*', { a: 'b' })
   }
 }
 module.exports = TestArrService

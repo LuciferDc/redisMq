@@ -65,5 +65,13 @@ class Config {
       db: this.ENVI.REDIS_DB
     }
   }
+
+  queueConfig () {
+    return {
+      queueName: 'mainQueue',
+      groupName: 'mainGroup',
+      consumerName: 'mainConsumer'
+    }
+  }
 }
 module.exports = Config
