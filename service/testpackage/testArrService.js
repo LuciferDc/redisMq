@@ -1,8 +1,8 @@
-const ServiceBase = require('../service.base')
+const BaseService = require('../service.base')
 const System = require('../../utils/system')
-class TestArrService extends ServiceBase {
+class TestArrService extends BaseService {
   constructor() {
-    super('testpackage', ServiceBase.getDaoName(TestArrService))
+    super('testpackage', BaseService.getDaoName(TestArrService))
     this.queueService = System.getObject('service.queue.queueService');
   }
   async test (ctx) {

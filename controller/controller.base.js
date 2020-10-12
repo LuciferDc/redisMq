@@ -1,6 +1,6 @@
 const System = require('../utils/system')
 
-class ControllerBase {
+class BaseController {
   constructor(packageName, serviceName) {
     this.service = System.getObject(`service.${packageName}.${serviceName}`)
   }
@@ -13,4 +13,4 @@ class ControllerBase {
     return serviceName
   }
 }
-module.exports = ControllerBase
+module.exports = BaseController

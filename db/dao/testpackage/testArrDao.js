@@ -1,5 +1,5 @@
-const Dao = require('../dao.base')
-class TestArrDao extends Dao {
+const BaseDao = require('../dao.base')
+class TestArrDao extends BaseDao {
   constructor() {
     super(Dao.getModelName(TestArrDao))
   }

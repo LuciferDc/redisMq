@@ -1,11 +1,11 @@
-const ControllerBase = require('../controller.base')
-class QueueController extends ControllerBase {
+const BaseController = require('../controller.base')
+class QueueController extends BaseController {
  constructor() {
-   super('queue', ControllerBase.getServiceName(QueueController))
+   super('queue', BaseController.getServiceName(QueueController))
  }
 
- async push (ctx, next) {
-   ctx.body = await this.service.test(ctx)
+ async getQueueList () {
+   
  }
 }
 module.exports = QueueController

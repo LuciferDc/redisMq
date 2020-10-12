@@ -1,7 +1,7 @@
-const Servicebase = require('../service.base')
+const BaseService = require('../service.base')
 const jwt = require('jsonwebtoken')
 const System = require('../../utils/system')
-class AuthService extends Servicebase {
+class AuthService extends BaseService {
   constructor() {
     super()
     this.config = System.getObject('config.default').jwtConfig()

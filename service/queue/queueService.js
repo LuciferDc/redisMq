@@ -1,6 +1,6 @@
-const ServiceBase = require("../service.base")
+const BaseService = require("../service.base")
 const System = require('../../utils/system')
-class QueueService extends ServiceBase {
+class QueueService extends BaseService {
   constructor() {
     super()
     this.redisClient = System.getObject('util.clients.redisClient')
@@ -29,7 +29,8 @@ class QueueService extends ServiceBase {
         }
       }
     }
-    // TODO: 消费者模块 1 正常消费  2 未 ack 消费
+    // TODO: 消费者模块 1 正常消费  2 未 ack 消费 在外部调用
+
   }
 }
 module.exports = QueueService

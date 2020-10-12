@@ -1,6 +1,6 @@
 const System = require('../utils/system')
 
-class ServiceBase {
+class BaseService {
   constructor(packageName, daoName) {
     this.db = System.getObject('db.connect').getCon()
     this.daoName = daoName
@@ -15,4 +15,4 @@ class ServiceBase {
     return daoName
   }
 }
-module.exports = ServiceBase
+module.exports = BaseService

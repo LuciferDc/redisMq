@@ -1,5 +1,5 @@
 const System = require('../../utils/system')
-class Dao {
+class BaseDao {
   constructor(modelName) {
     this.modelName = modelName
     const db = System.getObject('db.connect').getCon()
@@ -15,4 +15,4 @@ class Dao {
     return modelName
   }
 }
-module.exports = Dao
+module.exports = BaseDao

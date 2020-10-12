@@ -1,8 +1,8 @@
-const ControllerBase = require('../controller.base')
+const BaseController = require('../controller.base')
 const System = require('../../utils/system')
-class AuthController extends ControllerBase {
+class AuthController extends BaseController {
   constructor() {
-    super('common', ControllerBase.getServiceName(AuthController))
+    super('common', BaseController.getServiceName(AuthController))
   }
 
   async login (ctx, next) {
