@@ -27,7 +27,7 @@ class RedisClient {
    * @returns 
    * @memberof RedisClient
    */
-  async keys (reg) {
+  async getKeys (reg) {
     return this.client.keysAsync(reg)
   }
 
@@ -346,7 +346,7 @@ class RedisClient {
     if (count) {
       func += `, 'count', ${count}`
     }
-    if (block) {
+    if (block >= 0) {
       func += `, 'block', ${block}`
     }
     func += `, 'streams'`

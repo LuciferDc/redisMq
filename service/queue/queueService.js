@@ -13,22 +13,26 @@ class QueueService extends BaseService {
 
     // 如果 key 不存在 1 xadd 2 创建组 3 xgroupread 4 xack 5 开始消费
     // 如果 key 存在 1 (try 上面 2 cache) 上面 5
-    let keys = await this.redisClient.keys(this.config.queueName)
+    let keys = await this.redisClient.getKeys(this.config.queueName)
     if (0 === keys.length) {
       await this.redisClient.xadd(this.config.queueName, '*', { start: '0' }, 1000, true)
-      await this.redisClient.xgroupCreate(this.config.queueName, this.config.queueGroup, 0)
-      let firstData = await this.redisClient.xreadGroup(this.config.queueGroup, this.config.queueConsumer, [this.config.queueName], ['>'], 1, 0)
+      await this.redisClient.xgroupCreate(this.config.queueName, this.config.groupName, 0)
+      let firstData = await this.redisClient.xreadGroup(this.config.groupName, this.config.consumerName, [this.config.queueName], ['>'], 1, 0)
       let id = firstData[0].value[0].id
-      await this.redisClient.xack(this.config.queueName, this.config.queueGroup, id)
+      await this.redisClient.xack(this.config.queueName, this.config.groupName, id)
     } else {
       try {
-        await this.redisClient.xgroupCreate(this.config.queueName, this.config.queueGroup, 0)
+        await this.redisClient.xgroupCreate(this.config.queueName, this.config.groupName, 0)
       } catch (error) {
         if ('BUSYGROUP Consumer Group name already exists' !== error.message) {
           console.log(error)
         }
       }
     }
+  }
+
+  async getQueueList() {
+    return await this.redisClient.getKeys('*Queue')
   }
 }
 module.exports = QueueService
