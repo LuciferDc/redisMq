@@ -6,6 +6,7 @@ class QueueService extends BaseService {
     this.redisClient = System.getObject('util.clients.redisClient')
     this.config = System.getObject('config.default').queueConfig()
     this.init()
+    this.emitter = System.getObject('util.emitters.eventEmitters').emitter
   }
 
   async init () {
@@ -20,12 +21,16 @@ class QueueService extends BaseService {
       let firstData = await this.redisClient.xreadGroup(this.config.groupName, this.config.consumerName, [this.config.queueName], ['>'], 1, 0)
       let id = firstData[0].value[0].id
       await this.redisClient.xack(this.config.queueName, this.config.groupName, id)
+      this.emitter.emit('queueInitFinish')
     } else {
       try {
         await this.redisClient.xgroupCreate(this.config.queueName, this.config.groupName, 0)
+        this.emitter.emit('queueInitFinish')
       } catch (error) {
         if ('BUSYGROUP Consumer Group name already exists' !== error.message) {
           console.log(error)
+        } else {
+          this.emitter.emit('queueInitFinish')
         }
       }
     }

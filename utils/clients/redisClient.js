@@ -14,7 +14,17 @@ class RedisClient {
       db: this.config.db
     })
 
+    this.clientForBlock = redis.createClient({
+      host: this.config.host,
+      port: this.config.port,
+      password: this.config.password,
+      db: this.config.db
+    })
+
     this.client.on("error", function (err) {
+      console.log("Redis Error --- " + err)
+    })
+    this.clientForBlock.on("error", function (err) {
       console.log("Redis Error --- " + err)
     })
   }
@@ -343,21 +353,38 @@ class RedisClient {
    */
   async xreadGroup (group, consumer, keys, ids, count, block) {
     let func = `this.client.xreadgroupAsync('group', '${group}', '${consumer}'`
+    let funcForBlock = `this.clientForBlock.xreadgroupAsync('group', '${group}', '${consumer}'`
+
     if (count) {
       func += `, 'count', ${count}`
+      funcForBlock += `, 'count', ${count}`
     }
-    if (block >= 0) {
+    if (block > 0) {
       func += `, 'block', ${block}`
     }
+    if (block === 0) {
+      funcForBlock += `, 'block', ${block}`
+    }
+
     func += `, 'streams'`
+    funcForBlock += `, 'streams'`
     keys.forEach(i => {
       func += `, '${i}'`
+      funcForBlock += `, '${i}'`
     })
     ids.forEach(i => {
       func += `, '${i}'`
+      funcForBlock += `, '${i}'`
     })
     func += ')'
-    let res = await this.doSync(func)
+    funcForBlock += ')'
+    let res
+    if (0 !== block) {
+      res = await this.doSync(func)
+    } else {
+      res = await this.doSync(funcForBlock)
+    }
+    console.log(func)
     res = res ? this.orgXReadInfo(res) : res
     return res
   }
