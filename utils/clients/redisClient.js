@@ -384,7 +384,6 @@ class RedisClient {
     } else {
       res = await this.doSync(funcForBlock)
     }
-    console.log(func)
     res = res ? this.orgXReadInfo(res) : res
     return res
   }
