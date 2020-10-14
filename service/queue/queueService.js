@@ -29,8 +29,6 @@ class QueueService extends BaseService {
         }
       }
     }
-    // TODO: 消费者模块 1 正常消费  2 未 ack 消费 在外部调用
-
   }
 }
 module.exports = QueueService
