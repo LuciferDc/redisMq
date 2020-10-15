@@ -354,34 +354,28 @@ class RedisClient {
   async xreadGroup (group, consumer, keys, ids, count, block) {
     let func = `this.client.xreadgroupAsync('group', '${group}', '${consumer}'`
     let funcForBlock = `this.clientForBlock.xreadgroupAsync('group', '${group}', '${consumer}'`
-
+    let afterf = ''
     if (count) {
-      func += `, 'count', ${count}`
-      funcForBlock += `, 'count', ${count}`
+      afterf += `, 'count', ${count}`
     }
-    if (block > 0) {
-      func += `, 'block', ${block}`
-    }
-    if (block === 0) {
-      funcForBlock += `, 'block', ${block}`
+    if (block >= 0) {
+      afterf += `, 'block', ${block}`
     }
 
-    func += `, 'streams'`
-    funcForBlock += `, 'streams'`
+    afterf += `, 'streams'`
     keys.forEach(i => {
-      func += `, '${i}'`
-      funcForBlock += `, '${i}'`
+      afterf += `, '${i}'`
     })
     ids.forEach(i => {
-      func += `, '${i}'`
-      funcForBlock += `, '${i}'`
+      afterf += `, '${i}'`
     })
-    func += ')'
-    funcForBlock += ')'
+    afterf += ')'
     let res
     if (0 !== block) {
+      func += afterf
       res = await this.doSync(func)
     } else {
+      funcForBlock += afterf
       res = await this.doSync(funcForBlock)
     }
     res = res ? this.orgXReadInfo(res) : res
