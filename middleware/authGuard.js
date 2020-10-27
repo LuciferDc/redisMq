@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const System = require('../utils/system')
-const whiteList = ['/common/auth/login_POST']
+const whiteList = ['/common/auth/login_POST', '/_GET']
 module.exports = async (ctx, next) => {
   const config = System.getObject('config.default').jwtConfig()
   let url = `${ctx.url}_${ctx.method}`
