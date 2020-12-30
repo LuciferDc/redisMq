@@ -13,7 +13,7 @@ class ProductController extends BaseController {
       res = res ? System.orgResult(null, -1, res) : System.orgResult(null, 0, 'success')
       ctx.body = res
     } else {
-      ctx.body = System.orgResult(null, -1, 'url can\'t be null')
+      ctx.body = System.orgResult(null, -1, 'url can not null')
     }
   }
 

@@ -6,7 +6,6 @@ class TestArrService extends BaseService {
     this.queueService = System.getObject('service.queue.queueService');
   }
   async test (ctx) {
-    
     // await this.redisClient.xadd('testx', '*', { a: 'b' })
   }
 }
